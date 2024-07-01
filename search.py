@@ -1,23 +1,17 @@
 from docx import Document
 import os
 
-def is_In(string: str, substring: str):
-    if substring in string:
-        return True
-    else:
-        return False
-
 def search(docx_file: str, search_strings: tuple, icrc: bool = None):
     doc = Document(docx_file)
     foundnum = 0
     human_index = 0
     for a in search_strings:
         for par in doc.paragraphs:
-            if is_In(par.text, "RČ"):
+            if "RČ" in par.text:
                 human_index += 1
-            if is_In(par.text, "IČ"):
+            if "IČ" in par.text:
                 human_index -= 1
-            if is_In(par.text, a):
+            if a in par.text:
                 foundnum += 1
                 break
 
