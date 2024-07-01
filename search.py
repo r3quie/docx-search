@@ -33,8 +33,14 @@ def search(docx_file: str, search_strings: tuple, icrc: bool = None):
     else:
         return False
 
-def main(folder: str, search_strings: tuple, icrc: bool = None):
+def main(folder: str, search_strings: str, icrc: bool = None):
     gudfiles = []
+
+    if "\n" in search_strings:
+        search_strings = search_strings.splitlines()
+    else:
+        search_strings = (search_strings)
+
     for root, dirs, files in os.walk(folder):
         for file in files:
             if file.endswith('.docx'):
@@ -59,7 +65,9 @@ if __name__ == '__main__':
         gotten = True
     else:
         gotten = None
-    main(input("filepath"), (input("str1"), input('str2'), input('str3')), icrc = gotten)
+
+    inputstr = f"{input('str1')}\n {input('str2')}\n, {input('str3')}"
+    main(input("filepath"), inputstr, icrc = gotten)
 
 
             
