@@ -1,16 +1,17 @@
 from docx import Document
 import os
 
-def search(docx_file: str, search_strings: tuple, icrc: bool = None):
+def search(docx_file: str, search_strings: tuple, icrc: bool = None) -> bool:
     doc = Document(docx_file)
     foundnum = 0
     human_index = 0
     for a in search_strings:
         for par in doc.paragraphs:
-            if "RČ" in par.text:
-                human_index += 1
-            if "IČ" in par.text:
-                human_index -= 1
+            if icrc is not None:
+                if "RČ" in par.text:
+                    human_index += 1
+                if "IČ" in par.text:
+                    human_index -= 1
             if a in par.text:
                 foundnum += 1
                 break
@@ -27,14 +28,17 @@ def search(docx_file: str, search_strings: tuple, icrc: bool = None):
     else:
         return False
 
-def main(folder: str, search_strings: str, icrc: bool = None):
+def main(folder: str, search_strings: str, icrc: bool = None) -> list:
     gudfiles = []
-
+    print(search_strings + "input")
     if "\n" in search_strings:
         search_strings = search_strings.splitlines()
+        print(search_strings)
     else:
         search_strings = (search_strings)
-
+    for line in search_strings:
+        if "" == line:
+            search_strings.remove(line)
     for root, dirs, files in os.walk(folder):
         for file in files:
             if file.endswith('.docx'):
@@ -60,8 +64,8 @@ if __name__ == '__main__':
     else:
         gotten = None
 
-    inputstr = f"{input('str1')}\n {input('str2')}\n, {input('str3')}"
-    main(input("filepath"), inputstr, icrc = gotten)
+    inputstr = f"{input('str1')}\n{input('str2')}\n{input('str3')}"
+    print(main(input("filepath"), inputstr, icrc = gotten))
 
 
             
