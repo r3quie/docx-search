@@ -30,12 +30,14 @@ def search(docx_file: str, search_strings: tuple, icrc: bool = None) -> bool:
 
 def main(folder: str, search_strings: str, icrc: bool = None) -> list:
     gudfiles = []
+    
     print(search_strings + "input")
     if "\n" in search_strings:
         search_strings = search_strings.splitlines()
         print(search_strings)
-    else:
+    elif type(search_strings) != tuple or type(search_strings) != list:
         search_strings = (search_strings)
+
     for line in search_strings:
         if "" == line:
             search_strings.remove(line)
