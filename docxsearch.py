@@ -18,7 +18,7 @@ def search(docx_file: str, search_strings: tuple, icrc: bool = None) -> bool:
 
     if foundnum < len(search_strings):
         return False
-    if icrc is None:
+    if icrc is None or icrc == None:
         return True
 
     if human_index > 0 and icrc:
@@ -66,7 +66,14 @@ if __name__ == '__main__':
     else:
         gotten = None
 
-    inputstr = f"{input('str1')}\n{input('str2')}\n{input('str3')}"
+    j = int(input("zadejte kolik ustanovení chcete zadat"))
+
+    inputstr = ""
+    for i in range(j):
+        if i+1 == j:
+            inputstr += f"{input(f'Ustanoveni {i+1}: ')}"
+            continue
+        inputstr += f"{input(f'Ustanoveni {i+1}: ')}\n"
     print(main(input("filepath"), inputstr, icrc = gotten))
 
 
