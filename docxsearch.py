@@ -28,10 +28,8 @@ def search(docx_file: str, search_strings: tuple, icrc: bool = None) -> bool:
     else:
         return False
 
-def main(folder: str, search_strings: str, icrc: bool = None) -> list:
-    gudfiles = []
-    
-    print(search_strings + "input")
+def main(folder: str, search_strings: str, icrc: bool = None):
+    #print(search_strings + "input")
     if "\n" in search_strings:
         search_strings = search_strings.splitlines()
         print(search_strings)
@@ -47,13 +45,10 @@ def main(folder: str, search_strings: str, icrc: bool = None) -> list:
                 f = open(str(os.path.join(root, file)), 'rb')
                 try:    
                     if search(f, search_strings, icrc):
-                        print(os.path.join(root, file))
-                        gudfiles += [os.path.join(root, file)]
+                        yield os.path.join(root, file)
                     f.close()
                 except Exception as e:
                     f.close()
-
-    return gudfiles
 
 
 

@@ -1,5 +1,6 @@
 import customtkinter
 from docxsearch import main as docxsearch
+from local_variables import pathtofolder
 
 customtkinter.set_appearance_mode("dark")
 customtkinter.set_default_color_theme("dark-blue")
@@ -11,16 +12,32 @@ root.title("Vyhledávání")
 frame = customtkinter.CTkFrame(master=root)
 frame.grid(pady=30, padx=60)
 
+def case_in_zivre(zvire):
+    if zvire == "Kozy/Ovce":
+        return "O"
+    elif zvire == "Tuři":
+        return "T"
+    elif zvire == "Koně":
+        return "K"
+    elif zvire == "Prasata":
+        return "P"
+
 def testy():
-    result.configure(text=f"{globals()['paragrafy.entry%s.get()' % 1]}")
+    case = case_in_zivre(zvire.get())
+    yielding = ""
+    for ii in docxsearch(pathtofolder + case, paragrafy.entry.get("1.0", "end-1c")):
+        if yielding == "":
+            yielding = ii
+            result.configure(text = yielding)
+            continue
+        yielding += "\n" + ii
+        result.configure(text = yielding)
 
 class Entry:
     def __init__(self, text, colnum, rownum, pl_text):
-        i = 0
-        for holder in pl_text:
-            globals()['self.entry%s' % i] = customtkinter.CTkEntry(master=frame, placeholder_text=holder)
-            globals()['self.entry%s.grid(column=colnum+1, row=rownum+i, pady=12, padx=14)' % i]
-            i += 1
+        self.entry = customtkinter.CTkTextbox(master=frame)
+        self.entry.grid(column=colnum+1, row=rownum, pady=12, padx=14)
+        self.entry.insert("1.0", pl_text)
 
         self.label = customtkinter.CTkLabel(master=frame, text=text, font=("Arial", 12))
         self.label.grid(column=0 if colnum == 0 else 3, row=rownum, pady=12, padx=10)
@@ -35,15 +52,17 @@ class OptionMenu:
         return self.optionmenu.get()
     
 
-paragrafy = Entry("Zadejte vyhledávané ustanovení", 0, 1, ("§ 15 odst. 4 písm c)", "§ 23 odst. 1 písm. c)", "§ 24 odst. 2 písm. b)", "§ 15 odst. 4 písm c)"))
+paragrafy = Entry("Zadejte vyhledávané ustanovení", 0, 2, "§ 15 odst. 4 písm c)\n§ 23 odst. 1 písm. c)\n§ 24 odst. 2 písm. b)\n§ 15 odst. 4 písm c)")
 
 label = customtkinter.CTkLabel(master=frame, text="Vyhledávání", font=("Arial", 24))
 label.grid(pady=12, padx=10, columnspan=4, row=0)
 
-result = customtkinter.CTkLabel(master=frame, text =f"yelllllllllloooooooo")
-result.grid(pady=12, padx=10, columnspan=6, row=6)
+result = customtkinter.CTkLabel(master=frame, text =f"Výsledek")
+result.grid(pady=12, padx=10, column=6, row=0)
 
-button = customtkinter.CTkButton(master=frame, text="Vygenerovat", command=testy)
+zvire = OptionMenu("Zvíře", ["Kozy/Ovce", "Tuři", "Koně", "Prasata"], 0, 1)
+
+button = customtkinter.CTkButton(master=frame, text="Vyhledat", command=testy)
 button.grid(pady=12, padx=10, columnspan=4, row=5)
 
 
