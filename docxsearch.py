@@ -69,7 +69,8 @@ if __name__ == '__main__':
             inputstr += f"{input(f'Ustanoveni {i+1}: ')}"
             continue
         inputstr += f"{input(f'Ustanoveni {i+1}: ')}\n"
-    print(main(input("filepath"), inputstr, icrc = gotten))
-
+    
+    for yold in main(input("filepath"), inputstr, icrc = gotten):
+        print(yold)
 
             

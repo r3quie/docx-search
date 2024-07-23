@@ -1,6 +1,7 @@
 import customtkinter
 from docxsearch import main as docxsearch
 from local_variables import pathtofolder
+import threading
 
 customtkinter.set_appearance_mode("dark")
 customtkinter.set_default_color_theme("dark-blue")
@@ -23,15 +24,17 @@ def case_in_zivre(zvire):
         return "P"
 
 def testy():
-    case = case_in_zivre(zvire.get())
-    yielding = ""
-    for ii in docxsearch(pathtofolder + case, paragrafy.entry.get("1.0", "end-1c")):
-        if yielding == "":
-            yielding = ii
+    def test():
+        case = case_in_zivre(zvire.get())
+        yielding = ""
+        for ii in docxsearch(pathtofolder + case, paragrafy.entry.get("1.0", "end-1c")):
+            if yielding == "":
+                yielding = ii
+                result.configure(text = yielding)
+                continue
+            yielding += "\n" + ii
             result.configure(text = yielding)
-            continue
-        yielding += "\n" + ii
-        result.configure(text = yielding)
+    threading.Thread(target=test).start()
 
 class Entry:
     def __init__(self, text, colnum, rownum, pl_text):
