@@ -11,7 +11,10 @@ root.geometry("1320x680")
 root.title("Vyhledávání")
 
 frame = customtkinter.CTkFrame(master=root)
-frame.grid(pady=30, padx=60)
+frame.grid(pady=30, padx=60, row=0, column=0)
+
+frame2 = customtkinter.CTkFrame(master=root)
+frame2.grid(pady=30, padx=180,  row=1, column=0)
 
 def case_in_zivre(zvire):
     if zvire == "Kozy/Ovce":
@@ -60,7 +63,7 @@ paragrafy = Entry("Zadejte vyhledávané ustanovení", 0, 2, "§ 15 odst. 4 pís
 label = customtkinter.CTkLabel(master=frame, text="Vyhledávání", font=("Arial", 24))
 label.grid(pady=12, padx=10, columnspan=4, row=0)
 
-result = customtkinter.CTkLabel(master=frame, text =f"Výsledek")
+result = customtkinter.CTkLabel(master=frame2, text =f"Výsledek", justify="left")
 result.grid(pady=12, padx=10, column=6, row=0)
 
 zvire = OptionMenu("Zvíře", ["Kozy/Ovce", "Tuři", "Koně", "Prasata"], 0, 1)
