@@ -1,2 +1,5 @@
 local_variables.py
 __pycache__/
+vyhledavac.spec
+dist/
+build/

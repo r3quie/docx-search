@@ -30,18 +30,31 @@ def testy():
     def test():
         case = case_in_zivre(zvire.get())
         yielding = ""
+        j = 0
         person = None
         if rcic.get() == "IČ":
             person = False
         elif rcic.get() == "RČ":
             person = True
         for ii in docxsearch(pathtofolder + case, paragrafy.entry.get("1.0", "end-1c"), person): 
+            if j > 20:
+                yielding += "\nMnoho výsledků"
+                result.configure(text = yielding)
+                break
             if yielding == "":
                 yielding = ii
                 result.configure(text = yielding)
+                j += 1
                 continue
+            j += 1
             yielding += "\n" + ii
             result.configure(text = yielding)
+        else:
+            if yielding == "":
+                yielding = "Žádné výsledky"
+                result.configure(text=yielding)
+            else:
+                result.configure(text = yielding + "\nDokončeno")
     threading.Thread(target=test).start()
 
 class Entry:
