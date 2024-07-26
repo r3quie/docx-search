@@ -30,12 +30,11 @@ def testy():
     def test():
         case = case_in_zivre(zvire.get())
         yielding = ""
+        person = None
         if rcic.get() == "IČ":
             person = False
         elif rcic.get() == "RČ":
             person = True
-        else:
-            person = None
         for ii in docxsearch(pathtofolder + case, paragrafy.entry.get("1.0", "end-1c"), person): 
             if yielding == "":
                 yielding = ii
