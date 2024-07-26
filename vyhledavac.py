@@ -30,7 +30,13 @@ def testy():
     def test():
         case = case_in_zivre(zvire.get())
         yielding = ""
-        for ii in docxsearch(pathtofolder + case, paragrafy.entry.get("1.0", "end-1c")):
+        if rcic.get() == "IČ":
+            person = False
+        elif rcic.get() == "RČ":
+            person = True
+        else:
+            person = None
+        for ii in docxsearch(pathtofolder + case, paragrafy.entry.get("1.0", "end-1c"), person): 
             if yielding == "":
                 yielding = ii
                 result.configure(text = yielding)
@@ -67,6 +73,7 @@ result = customtkinter.CTkLabel(master=frame2, text =f"Výsledek", justify="left
 result.grid(pady=12, padx=10, column=6, row=0)
 
 zvire = OptionMenu("Zvíře", ["Kozy/Ovce", "Tuři", "Koně", "Prasata"], 0, 1)
+rcic = OptionMenu("RČ nebo IČ?", ["IČ", "RČ", "Oba"], 1, 1)
 
 button = customtkinter.CTkButton(master=frame, text="Vyhledat", command=testy)
 button.grid(pady=12, padx=10, columnspan=4, row=5)
